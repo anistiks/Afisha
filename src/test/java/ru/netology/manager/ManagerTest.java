@@ -59,7 +59,7 @@ class MovieManagerTest {
     }
 
     @Test
-    void shouldFindLastMoviesForDefaultCountInReverseOrder() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10)
+    void shouldFindLastMoviesForDefaultCountInReverseOrder() {    //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10)
         movieManager.addNewMovie(first);
         movieManager.addNewMovie(second);
         movieManager.addNewMovie(third);
@@ -107,7 +107,7 @@ class MovieManagerTest {
     }
 
     @Test
-    void shouldFindLastMoviesForDefaultCountInReverseOrderIfQuantityIs0() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если в конструктор передается 0
+    void shouldFindLastMoviesForDefaultCountInReverseOrderIfQuantityIs0() {     // последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если в конструктор передается 0
         Manager movieManager = new Manager(0);
 
         movieManager.addNewMovie(first);
@@ -128,7 +128,7 @@ class MovieManagerTest {
     }
 
     @Test
-    void shouldFindLastMoviesForDefaultCountInReverseOrderIfQuantityIsLessThen0() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если в конструктор передается меньше 0
+    void shouldFindLastMoviesForDefaultCountInReverseOrderIfQuantityIsLessThen0() {    //последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если в конструктор передается меньше 0
         Manager movieManager = new Manager(-1);
 
         movieManager.addNewMovie(first);
@@ -150,6 +150,7 @@ class MovieManagerTest {
 
     @Test
     void shouldFindLastMoviesForDefaultCountInReverseOrderIfAdd5() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если добавлены 5
+
         movieManager.addNewMovie(first);
         movieManager.addNewMovie(second);
         movieManager.addNewMovie(third);
@@ -157,6 +158,74 @@ class MovieManagerTest {
         movieManager.addNewMovie(fifth);
 
         Movie[] expected = {fifth, fourth, third, second, first};
+        Movie[] actual = movieManager.findLast();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldGetMoviesInReverseLimit10() {   //равно лимиту
+
+        Manager movieManager = new Manager(10);
+
+        movieManager.addNewMovie(first);
+        movieManager.addNewMovie(second);
+        movieManager.addNewMovie(third);
+        movieManager.addNewMovie(fourth);
+        movieManager.addNewMovie(fifth);
+        movieManager.addNewMovie(sixth);
+        movieManager.addNewMovie(seventh);
+        movieManager.addNewMovie(eighth);
+        movieManager.addNewMovie(ninth);
+        movieManager.addNewMovie(tenth);
+
+
+        Movie[] expected = {tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
+        Movie[] actual = movieManager.findLast();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldGetMoviesInReverseLimit11() {  //больше лимита
+
+        Manager movieManager = new Manager(10);
+
+        movieManager.addNewMovie(first);
+        movieManager.addNewMovie(second);
+        movieManager.addNewMovie(third);
+        movieManager.addNewMovie(fourth);
+        movieManager.addNewMovie(fifth);
+        movieManager.addNewMovie(sixth);
+        movieManager.addNewMovie(seventh);
+        movieManager.addNewMovie(eighth);
+        movieManager.addNewMovie(ninth);
+        movieManager.addNewMovie(tenth);
+        movieManager.addNewMovie(eleventh);
+
+
+        Movie[] expected = {eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Movie[] actual = movieManager.findLast();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldGetMoviesInReverseLimitLower() { //меньше, чем лимит
+
+        Manager movieManager = new Manager(12);
+
+        movieManager.addNewMovie(first);
+        movieManager.addNewMovie(second);
+        movieManager.addNewMovie(third);
+        movieManager.addNewMovie(fourth);
+        movieManager.addNewMovie(fifth);
+        movieManager.addNewMovie(sixth);
+        movieManager.addNewMovie(seventh);
+        movieManager.addNewMovie(eighth);
+        movieManager.addNewMovie(ninth);
+        movieManager.addNewMovie(tenth);
+        movieManager.addNewMovie(eleventh);
+
+
+        Movie[] expected = {eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
         Movie[] actual = movieManager.findLast();
         assertArrayEquals(expected, actual);
     }
